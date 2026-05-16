@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: transparent;
+    color: var(--text-primary, #1a1a1a);
+    padding: 16px;
+  }
+  h1 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--text-primary, #111);
+  }
+  .subtitle {
+    font-size: 12px;
+    color: var(--text-secondary, #666);
+    margin-bottom: 20px;
+  }
+  .tier {
+    margin-bottom: 24px;
+  }
+  .tier-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid;
+  }
+  .tier-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .tier-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary, #111);
+  }
+  .tier-desc {
+    font-size: 11px;
+    color: var(--text-secondary, #777);
+    margin-left: auto;
+  }
+
+  /* Tier colors */
+  .tier-green .tier-header { border-color: #22c55e; }
+  .tier-green .tier-badge { background: #dcfce7; color: #15803d; }
+  
+  .tier-yellow .tier-header { border-color: #f59e0b; }
+  .tier-yellow .tier-badge { background: #fef3c7; color: #b45309; }
+  
+  .tier-red .tier-header { border-color: #ef4444; }
+  .tier-red .tier-badge { background: #fee2e2; color: #b91c1c; }
+
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .card {
+    background: var(--bg-secondary, #f9fafb);
+    border: 1px solid var(--border-color, #e5e7eb);
+    border-radius: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border-left: 4px solid transparent;
+  }
+  .card:hover { transform: translateX(2px); }
+  .tier-green .card { border-left-color: #22c55e; }
+  .tier-yellow .card { border-left-color: #f59e0b; }
+  .tier-red .card { border-left-color: #ef4444; }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary, #111);
+    flex: 1;
+  }
+  .card-tags {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .tag {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .tag-ia { background: #ede9fe; color: #5b21b6; }
+  .tag-dados { background: #dbeafe; color: #1d4ed8; }
+  .tag-ux { background: #fce7f3; color: #9d174d; }
+  .tag-app { background: #d1fae5; color: #065f46; }
+  .tag-ml { background: #fef9c3; color: #78350f; }
+
+  .card-body {
+    font-size: 11.5px;
+    color: var(--text-secondary, #555);
+    margin-top: 5px;
+    line-height: 1.5;
+  }
+  .card-ref {
+    font-size: 10px;
+    color: #888;
+    margin-top: 4px;
+    font-style: italic;
+  }
+  .card-ref span {
+    color: #6366f1;
+    font-weight: 500;
+  }
+
+  .summary-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .sum-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-secondary, #555);
+  }
+  .sum-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+<h2 class="sr-only" style="position:absolute;left:-9999px">Brainstorming de ideias para o Hackathon PagBank, classificadas por viabilidade</h2>
+
+<h1>💡 Brainstorming — Hacka PagBank: Desafio 4</h1>
+<p class="subtitle">Ideias classificadas por viabilidade para entrega em um final de semana</p>
+
+<div class="summary-bar">
+  <div class="sum-item"><div class="sum-dot" style="background:#22c55e"></div>Alta viabilidade — 5 ideias</div>
+  <div class="sum-item"><div class="sum-dot" style="background:#f59e0b"></div>Viável com foco — 5 ideias</div>
+  <div class="sum-item"><div class="sum-dot" style="background:#ef4444"></div>Ambiciosa / risco alto — 4 ideias</div>
+</div>
+
+<!-- TIER 1: ALTA VIABILIDADE -->
+<div class="tier tier-green">
+  <div class="tier-header">
+    <div class="tier-badge">🟢 Alta</div>
+    <div class="tier-label">Dá pra entregar em 2 dias</div>
+    <div class="tier-desc">Prototype + mock data + AI agent funcional</div>
+  </div>
+  <div class="cards">
+    
+    <div class="card" onclick="sendPrompt('Me dá mais detalhes sobre a ideia: Health Score da Maquininha')">
+      <div class="card-top">
+        <div class="card-title">1. Health Score da Maquininha</div>
+        <div class="card-tags">
+          <span class="tag tag-dados">Dados</span>
+          <span class="tag tag-app">App</span>
+          <span class="tag tag-ux">UX</span>
+        </div>
+      </div>
+      <div class="card-body">Um score de 0–100 que agrega: conectividade, erros acumulados, bateria, queda de TPV e histórico de chamados. Quando cai abaixo de threshold, dispara ação preventiva. Simples de prototipar com dados sintéticos e calcular com regras.</div>
+      <div class="card-ref">Inspirado em: <span>Square Terminal Health</span>, <span>Toast POS Diagnostics</span></div>
+    </div>
+
+    <div class="card" onclick="sendPrompt('Me dá mais detalhes sobre a ideia: Agente IA de Diagnóstico Conversacional')">
+      <div class="card-top">
+        <div class="card-title">2. Agente IA de Diagnóstico Conversacional</div>
+        <div class="card-tags">
+          <span class="tag tag-ia">IA</span>
+          <span class="tag tag-ux">UX</span>
+          <span class="tag tag-app">App</span>
+        </div>
+      </div>
+      <div class="card-body">No app ou WhatsApp, um agente que recebe o erro (ex: M5000) e conduz o cliente pela solução correta com linguagem humana — sem precisar de atendente. Já tem mapeamento de erros e ações. O agente é o diferencial.</div>
+      <div class="card-ref">Inspirado em: <span>Stripe Radar Assistant</span>, <span>SumUp Help Bot</span></div>
+    </div>
+
+    <div class="card" onclick="sendPrompt('Me dá mais detalhes sobre a ideia: Hub de Saúde no App')">
+      <div class="card-top">
+        <div class="card-title">3. Hub de Saúde no App</div>
+        <div class="card-tags">
+          <span class="tag tag-ux">UX</span>
+          <span class="tag tag-app">App</span>
+        </div>
+      </div>
+      <div class="card-body">Dashboard visual dentro do app onde o cliente vê o status de todas as suas maquininhas: sinal, bateria, última transação, alertas ativos, e atalho para autosserviço. Fácil de prototipar. Tem alto impacto visual na apresentação.</div>
+      <div class="card-ref">Inspirado em: <span>Clover Dashboard</span>, <span>Shopify POS Status</span></div>
+    </div>
+
+    <div class="card" onclick="sendPrompt('Me dá mais detalhes sobre a ideia: TPV Anomaly Alert')">
+      <div class="card-top">
+        <div class="card-title">4. TPV Anomaly Alert — "Sua máquina silenciou"</div>
+        <div class="card-tags">
+          <span class="tag tag-dados">Dados</span>
+          <span class="tag tag-ia">IA</span>
+        </div>
+      </div>
+      <div class="card-body">Detecta quedas anormais de TPV comparando terminal vs. histórico próprio e vs. peer group (mesma região/segmento). Dispara push proativo: "Notamos que suas vendas caíram hoje. Sua máquina está ok?" — com CTA para diagnóstico.</div>
+      <div class="card-ref">Inspirado em: <span>Square Insights</span>, <span>Adyen Terminal Analytics</span></div>
+    </div>
+
+    <div class="card" onclick="sendPrompt('Me dá mais detalhes sobre a ideia: Onboarding Inteligente com pré-check de erros')">
+      <div class="card-top">
+        <div class="card-title">5. Ativação Zero Fricção — Pré-check de Erros</div>
+        <div class="card-tags">
+          <span class="tag tag-ux">UX</span>
+          <span class="tag tag-ia">IA</span>
+          <span class="tag tag-app">App</span>
+        </div>
+      </div>
+      <div class="card-body">Antes de cada passo da ativação, o app faz um "pré-check silencioso" para identificar se o terminal é propenso ao erro M5000, M5007 etc. — e resolve no pano de fundo. Onde não resolve, contextualiza com linguagem humana antes do erro aparecer.</div>
+      <div class="card-ref">Inspirado em: <span>Stripe Onboarding Intelligence</span>, <span>iZettle Setup Wizard</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TIER 2: VIÁVEL COM FOCO -->
+<div class="tier tier-yellow">
+  <div class="tier-header">
+    <div class="tier-badge">🟡 Médio</div>
+    <div class="tier-label">Viável com foco e simplificação</div>
+    <div class="tier-desc">Requer mock de dados mais elaborado ou múltiplos módulos</div>
+  </div>
+  <div class="cards">
+
+    <div class="card" onclick="sendPrompt('Me dá mais detalhes sobre a ideia: Predictive Swap Engine')">
+      <div class="card-top">
+        <div class="card-title">6. Predictive Swap Engine — Troca Antes da Falha</div>
+        <div class="card-tags">
+          <span class="tag tag-ml">ML</span>
+          <span class="tag tag-dados">Dados</span>
+          <span class="tag tag-ia">IA</span>
+        </div>
+      </div>
+      <div class="card-body">Modelo que pontua terminais com alta probabilidade de falha nos próximos 7–14 dias. Usa: padrão de erros, idade do terminal, bateria, frequência de chamados. Aciona Pagprevine automaticamente. Viável com modelo simples de regras + dados históricos.</div>
+      <div class="card-ref">Inspirado em: <span>SumUp Predictive Replacement</span>, <span>Toast Hardware Analytics</span></div>
+    </div>
+
+    <div class="card" onclick="sendPrompt('Me dá mais detalhes sobre a ideia: Recovery Automático Silencioso')">
+      <div class="card-top">
+        <div class="card-title">7. Recovery Automático Silencioso</div>
+        <div class="card-tags">
+          <span class="tag tag-ia">IA</span>
+          <span class="tag tag-dados">Dados</span>
+        </div>
+      </div>
+      <div class="card-body">Quando detecta erro crítico (PED tampered, sem sinal, chip inativo), dispara automaticamente ações de recovery: reset remoto, reconexão, reativação de chip. Só notifica o cliente se não resolver. Elimina chamado antes de ele existir.</div>
+      <div class="card-ref">Inspirado em: <span>Adyen Remote Recovery</span>, <span>Verifone Silent Heal</span></div>
+    </div>
+
+    <div class="card" onclick="sendPrompt('Me dá mais detalhes sobre a ideia: Smart Maintenance Window')">
+      <div class="card-top">
+        <div class="card-title">8. Smart Maintenance Window</div>
+        <div class="card-tags">
+          <span class="tag tag-ml">ML</span>
+          <span class="tag tag-dados">Dados</span>
+        </div>
+      </div>
+      <div class="card-body">Identifica o janela de menor uso do terminal (baseada no histórico de TPV por hora/dia) e agenda updates e manutenções remotas nesse período. Evita interrupção em hora de pico. Notifica o cliente: "Atualizamos sua máquina de madrugada. Ela está pronta."</div>
+      <div class="card-ref">Inspirado em: <span>Clover Remote Management</span>, <span>Square Auto-Update</span></div>
+    </div>
+
+    <div class="card" onclick="sendPrompt('Me dá mais detalhes sobre a ideia: Peer Benchmark de Saúde Regional')">
+      <div class="card-top">
+        <div class="card-title">9. Peer Benchmark Regional</div>
+        <div class="card-tags">
+          <span class="tag tag-dados">Dados</span>
+          <span class="tag tag-ux">UX</span>
+        </div>
+      </div>
+      <div class="card-body">Compara o desempenho do terminal do cliente com terminais similares da mesma região e segmento. Gera contexto motivador: "Sua máquina está 40% abaixo da média de padarias em São Paulo." Cria urgência sem alarmar.</div>
+      <div class="card-ref">Inspirado em: <span>Square Analytics Benchmarks</span>, <span>PayPal Business Insights</span></div>
+    </div>
+
+    <div class="card" onclick="sendPrompt('Me dá mais detalhes sobre a ideia: Network Intelligence Map')">
+      <div class="card-top">
+        <div class="card-title">10. Network Intelligence — Mapa de Cobertura</div>
+        <div class="card-tags">
+          <span class="tag tag-dados">Dados</span>
+          <span class="tag tag-ml">ML</span>
+        </div>
+      </div>
+      <div class="card-body">Agrega dados de conectividade de terminais por geolocalização para identificar regiões com degradação de sinal. Alerta proativamente terminais nessas regiões antes de perderem conexão. Pode integrar com status das operadoras.</div>
+      <div class="card-ref">Inspirado em: <span>Stripe Connectivity Atlas</span>, <span>SumUp Network Monitor</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TIER 3: AMBICIOSA -->
+<div class="tier tier-red">
+  <div class="tier-header">
+    <div class="tier-badge">🔴 Alto risco</div>
+    <div class="tier-label">Ambiciosa — risco de não entregar</div>
+    <div class="tier-desc">Complexidade técnica ou de dados além do hackathon</div>
+  </div>
+  <div class="cards">
+
+    <div class="card" onclick="sendPrompt('Me dá mais detalhes sobre a ideia: Contingência Digital na Queda da Máquina')">
+      <div class="card-top">
+        <div class="card-title">11. Plano B Automático — Link de Pagamento na Queda</div>
+        <div class="card-tags">
+          <span class="tag tag-ux">UX</span>
+          <span class="tag tag-ia">IA</span>
+          <span class="tag tag-app">App</span>
+        </div>
+      </div>
+      <div class="card-body">Quando o terminal fica offline, dispara automaticamente um link de pagamento por PIX/WhatsApp para o cliente não perder a venda. "Sua máquina saiu do ar. Enviamos um link de cobrança para o seu WhatsApp." Precisa de integração real com produto de pagamentos.</div>
+      <div class="card-ref">Inspirado em: <span>Stripe Fallback Payments</span></div>
+    </div>
+
+    <div class="card" onclick="sendPrompt('Me dá mais detalhes sobre a ideia: Autodiagnóstico na Tela da Maquininha')">
+      <div class="card-top">
+        <div class="card-title">12. Autodiagnóstico na Tela da Própria Máquina</div>
+        <div class="card-tags">
+          <span class="tag tag-ux">UX</span>
+          <span class="tag tag-dados">Dados</span>
+        </div>
+      </div>
+      <div class="card-body">Fluxo de diagnóstico iniciado pelo cliente direto na maquininha, com testes de sinal, bateria e chip. Sincroniza resultado com a central. Requer integração com firmware da máquina — alto risco técnico para hackathon.</div>
+      <div class="card-ref">Inspirado em: <span>Toast Self-Diagnostics</span></div>
+    </div>
+
+    <div class="card" onclick="sendPrompt('Me dá mais detalhes sobre a ideia: Voice of Machine — NPS do Hardware')">
+      <div class="card-top">
+        <div class="card-title">13. Voice of Machine — Feedback Loop de Hardware</div>
+        <div class="card-tags">
+          <span class="tag tag-dados">Dados</span>
+          <span class="tag tag-ia">IA</span>
+        </div>
+      </div>
+      <div class="card-body">Após resolução de qualquer problema, coleta micro-feedback do cliente sobre o processo + dados técnicos do terminal para treinar continuamente os modelos preditivos. É a camada de melhoria contínua — ótima para apresentar, difícil de entregar funcionando.</div>
+      <div class="card-ref">Inspirado em: <span>Adyen Merchant Feedback Loop</span></div>
+    </div>
+
+    <div class="card" onclick="sendPrompt('Me dá mais detalhes sobre a ideia: Modelo de ML full-stack de risco de churn por falha de maquininha')">
+      <div class="card-top">
+        <div class="card-title">14. Churn Predictor — Falha como Gatilho de Cancelamento</div>
+        <div class="card-tags">
+          <span class="tag tag-ml">ML</span>
+          <span class="tag tag-dados">Dados</span>
+        </div>
+      </div>
+      <div class="card-body">Correlaciona frequência e tipo de falhas com probabilidade de churn. Clientes com máquinas problemáticas que não receberam suporte ativo têm X vezes mais risco de cancelar. Aciona equipe de retenção preventivamente. Precisa de base de dados histórica rica.</div>
+      <div class="card-ref">Inspirado em: <span>Stripe Churn Intelligence</span>, <span>Square Retention Signals</span></div>
+    </div>
+
+  </div>
+</div>
+
+<p style="font-size:10px;color:#aaa;margin-top:8px;text-align:center">Clique em qualquer ideia para explorar mais detalhes</p>
+</body>
+</html>
